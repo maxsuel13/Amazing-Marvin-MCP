@@ -1,0 +1,58 @@
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "amazing-marvin-mcp"
+version = "0.1.0"
+description = "Amazing Marvin Model Context Provider"
+readme = "README.md"
+requires-python = ">=3.8"
+license = {text = "MIT"}
+authors = [
+    {name = "bgheneti", email = "bgheneti@users.noreply.github.com"}
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "fastapi>=0.68.0",
+    "fastmcp>=0.1.0",
+    "requests>=2.25.1",
+    "uvicorn>=0.15.0",
+    "pydantic>=2.0.0",
+    "pydantic-settings>=2.0.0",
+    "python-dotenv>=0.19.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=6.0.0",
+    "black>=21.5b2",
+    "isort>=5.8.0",
+    "mypy>=0.812",
+]
+
+[project.scripts]
+amazing-marvin-mcp = "amazing_marvin_mcp.main:start"
+
+[project.urls]
+"Homepage" = "https://github.com/bgheneti/Amazing-Marvin-MCP"
+"Bug Tracker" = "https://github.com/bgheneti/Amazing-Marvin-MCP/issues"
+
+[tool.isort]
+profile = "black"
+line_length = 88
+
+[tool.black]
+line-length = 88
+target-version = ['py38']
+
+[tool.smithery]
+name = "amazing-marvin-mcp"
+display_name = "Amazing Marvin MCP"
+description = "Model Context Provider for Amazing Marvin productivity app"
+entry_point = "amazing_marvin_mcp.main:start"
+environment_variables = ["AMAZING_MARVIN_API_KEY"]
