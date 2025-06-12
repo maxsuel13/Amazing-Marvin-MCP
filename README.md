@@ -1,5 +1,7 @@
 # Amazing Marvin Model Context Provider
 
+[![smithery badge](https://smithery.ai/badge/@bgheneti/amazing-marvin-mcp)](https://smithery.ai/server/@bgheneti/amazing-marvin-mcp)
+
 This is a Model Context Provider for [Amazing Marvin](https://amazingmarvin.com/) that provides your tasks, projects, categories, and other data from your Marvin account to AI models.
 
 ## Features
@@ -10,6 +12,14 @@ This is a Model Context Provider for [Amazing Marvin](https://amazingmarvin.com/
 - Compatible with AI assistants that support context providers
 
 ## Installation
+
+### Installing via Smithery
+
+To install amazing-marvin-mcp for Claude Desktop automatically via [Smithery](https://smithery.ai/server/@bgheneti/amazing-marvin-mcp):
+
+```bash
+npx -y @smithery/cli install @bgheneti/amazing-marvin-mcp --client claude
+```
 
 ### Requirements
 - Python >= 3.8
