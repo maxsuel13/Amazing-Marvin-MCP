@@ -42,7 +42,13 @@ def update_version_in_pyproject(new_version: str) -> None:
     pyproject_path = Path("pyproject.toml")
     content = pyproject_path.read_text()
 
-    new_content = re.sub(r'version = "[^"]+"', f'version = "{new_version}"', content)
+    # More specific regex to only match the project version, not tool configurations
+    new_content = re.sub(
+        r'(\[project\].*?^version = )"[^"]+"',
+        rf'\1"{new_version}"',
+        content,
+        flags=re.MULTILINE | re.DOTALL,
+    )
 
     pyproject_path.write_text(new_content)
     print(f"✅ Updated pyproject.toml to version {new_version}")

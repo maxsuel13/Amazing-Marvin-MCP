@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "amazing-marvin-mcp"
-version = "0.1.1"
+version = "0.1.2"
 description = "Amazing Marvin Model Context Provider"
 readme = "README.md"
 requires-python = ">=3.8"
@@ -52,7 +52,7 @@ target-version = ['py38']
 
 [tool.ruff]
 line-length = 88
-target-version = "0.1.1"
+target-version = "py38"
 
 [tool.ruff.lint]
 select = ["E", "F", "W", "C90", "I", "N", "UP", "B", "A", "C4", "DJ", "EM", "EXE", "ISC", "ICN", "G", "PIE", "T20", "PYI", "PT", "Q", "RSE", "RET", "SLF", "SIM", "TID", "TCH", "ARG", "PTH", "ERA", "PD", "PGH", "PL", "TRY", "NPY", "RUF"]
@@ -66,7 +66,7 @@ quote-style = "double"
 indent-style = "space"
 
 [tool.mypy]
-python_version = "0.1.1"
+python_version = "3.8"
 ignore_missing_imports = true
 strict_optional = true
 warn_redundant_casts = true
