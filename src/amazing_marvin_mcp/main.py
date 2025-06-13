@@ -284,14 +284,82 @@ async def time_tracking_summary() -> Dict[str, Any]:
 
 @mcp.tool()
 async def get_completed_tasks() -> Dict[str, Any]:
-    """Get completed tasks from available sources
-
-    Note: Due to API limitations, this searches multiple endpoints and filters for completed tasks.
-    May not include all historical completed tasks. For comprehensive history, use the Amazing Marvin app directly.
-    """
+    """Get completed tasks with efficient date filtering and categorization"""
     from .utils import get_completed_tasks_util
 
     return get_completed_tasks_util()
+
+
+@mcp.tool()
+async def get_productivity_summary_for_time_range(
+    days: Optional[int] = None,
+    start_date: Optional[str] = None,
+    end_date: Optional[str] = None,
+) -> Dict[str, Any]:
+    """Get a comprehensive productivity summary for a specified time range
+
+    Args:
+        days: Number of days to analyze from today backwards (default: 7 for weekly summary)
+              Examples: 1 (today only), 7 (past week), 30 (past month)
+        start_date: Start date in YYYY-MM-DD format (overrides days parameter)
+        end_date: End date in YYYY-MM-DD format (defaults to today if start_date provided)
+
+    Examples:
+        - get_productivity_summary_for_time_range(days=30)  # Past 30 days
+        - get_productivity_summary_for_time_range(start_date='2025-06-01', end_date='2025-06-10')
+        - get_productivity_summary_for_time_range(start_date='2025-06-01')  # June 1st to today
+    """
+    from .utils import get_productivity_summary_for_time_range_util
+
+    return get_productivity_summary_for_time_range_util(days, start_date, end_date)
+
+
+@mcp.tool()
+async def get_completed_tasks_for_date(date: str) -> Dict[str, Any]:
+    """Get completed tasks for a specific date using efficient API filtering
+
+    Args:
+        date: Date in YYYY-MM-DD format (e.g., '2025-06-13')
+    """
+    settings = get_settings()
+    api_client = MarvinAPIClient(api_key=settings.amazing_marvin_api_key)
+
+    try:
+        completed_items = api_client.get_done_items(date=date)
+
+        # Group by project for better organization
+        by_project = {}
+        unassigned = []
+
+        for item in completed_items:
+            parent_id = item.get("parentId", "unassigned")
+
+            if parent_id == "unassigned":
+                unassigned.append(item)
+            else:
+                if parent_id not in by_project:
+                    by_project[parent_id] = []
+                by_project[parent_id].append(item)
+
+        return {
+            "date": date,
+            "total_completed": len(completed_items),
+            "completed_by_project": by_project,
+            "unassigned_completed": unassigned,
+            "project_count": len(by_project),
+            "unassigned_count": len(unassigned),
+            "all_completed": completed_items,
+            "source": f"Efficiently filtered from /doneItems?date={date}",
+        }
+
+    except Exception as e:
+        return {
+            "date": date,
+            "error": str(e),
+            "total_completed": 0,
+            "completed_by_project": {},
+            "unassigned_completed": [],
+        }
 
 
 def start():

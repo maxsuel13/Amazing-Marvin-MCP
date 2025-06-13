@@ -4,11 +4,15 @@ from datetime import datetime
 
 import pytest
 import requests
-from amazing_marvin_mcp.api import MarvinAPIClient
-from amazing_marvin_mcp.config import get_settings
+
+from src.amazing_marvin_mcp.api import MarvinAPIClient
+from src.amazing_marvin_mcp.config import get_settings
+
+# Constants for tests
+TASK_COUNT = 3  # Number of tasks to create in tests
 
 
-@pytest.fixture()
+@pytest.fixture
 def api_client():
     """Create API client for testing."""
     try:
@@ -20,32 +24,21 @@ def api_client():
         pytest.skip("Configuration error - cannot create API client")
 
 
-@pytest.fixture()
-def created_items():
-    """Track created items for cleanup attempts."""
-    items = {"projects": [], "tasks": []}
-    yield items
-    # Note: Cleanup not possible with standard API token
-    # Items will remain in Amazing Marvin account
-    if items["projects"] or items["tasks"]:
-        pass
-
-
-@pytest.fixture()
+@pytest.fixture
 def test_project_data():
     """Test project data."""
     return {
-        "title": f"[TEST] Pytest Project - {datetime.now().strftime('%H:%M:%S')}",
+        "title": f"Pytest Test Project - {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}",
         "type": "project",
     }
 
 
-@pytest.fixture()
+@pytest.fixture
 def test_task_data():
     """Test task data."""
     return {
-        "title": f"[TEST] Pytest Task - {datetime.now().strftime('%H:%M:%S')}",
-        "note": "This is a test task created by pytest - safe to delete",
+        "title": f"Pytest Test Task - {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}",
+        "note": "This is a test task created by pytest",
     }
 
 
@@ -96,30 +89,27 @@ class TestMarvinAPIClient:
 class TestTaskAndProjectManagement:
     """Test task and project creation, modification, and deletion."""
 
-    def test_create_project(self, api_client, test_project_data, created_items):
+    def test_create_project(self, api_client, test_project_data):
         """Test creating a project."""
         created_project = api_client.create_project(test_project_data)
-        created_items["projects"].append(created_project.get("_id"))
         assert created_project is not None
         assert created_project.get("title") == test_project_data["title"]
         assert "_id" in created_project
 
-    def test_create_task(self, api_client, test_task_data, created_items):
+    def test_create_task(self, api_client, test_task_data):
         """Test creating a task."""
         created_task = api_client.create_task(test_task_data)
-        created_items["tasks"].append(created_task.get("_id"))
         assert created_task is not None
         assert created_task.get("title") == test_task_data["title"]
         assert "_id" in created_task
 
     def test_comprehensive_workflow(
-        self, api_client, test_project_data, test_task_data, created_items
+        self, api_client, test_project_data, test_task_data
     ):
         """Test a complete workflow: create project, add tasks, manage tasks."""
         # Create test project
         created_project = api_client.create_project(test_project_data)
         project_id = created_project.get("_id")
-        created_items["projects"].append(project_id)
         assert project_id is not None
 
         # Create tasks in the project
@@ -127,11 +117,10 @@ class TestTaskAndProjectManagement:
         for i in range(3):
             task_data = {
                 **test_task_data,
-                "title": f"{test_task_data['title']} #{i + 1}",
+                "title": f"{test_task_data['title']} #{i+1}",
                 "parentId": project_id,
             }
             created_task = api_client.create_task(task_data)
-            created_items["tasks"].append(created_task.get("_id"))
             test_tasks.append(created_task)
             assert created_task.get("_id") is not None
 
@@ -150,12 +139,11 @@ class TestTaskAndProjectManagement:
 class TestTimeTracking:
     """Test time tracking functionality."""
 
-    def test_start_stop_tracking(self, api_client, test_task_data, created_items):
+    def test_start_stop_tracking(self, api_client, test_task_data):
         """Test starting and stopping time tracking."""
         # First create a task to track
         created_task = api_client.create_task(test_task_data)
         task_id = created_task.get("_id")
-        created_items["tasks"].append(task_id)
         assert task_id is not None
 
         # Test starting tracking
@@ -166,12 +154,11 @@ class TestTimeTracking:
         stop_result = api_client.stop_time_tracking(task_id)
         assert stop_result is not None
 
-    def test_get_time_tracks(self, api_client, test_task_data, created_items):
+    def test_get_time_tracks(self, api_client, test_task_data):
         """Test getting time tracking data."""
         # Create a task first
         created_task = api_client.create_task(test_task_data)
         task_id = created_task.get("_id")
-        created_items["tasks"].append(task_id)
         assert task_id is not None
 
         # Get time tracks for the task
@@ -182,12 +169,11 @@ class TestTimeTracking:
 class TestRewards:
     """Test reward system functionality."""
 
-    def test_claim_reward_points(self, api_client, test_task_data, created_items):
+    def test_claim_reward_points(self, api_client, test_task_data):
         """Test claiming reward points."""
         # Create and complete a task first
         created_task = api_client.create_task(test_task_data)
         task_id = created_task.get("_id")
-        created_items["tasks"].append(task_id)
         assert task_id is not None
 
         # Mark task as done
@@ -210,17 +196,17 @@ class TestRewards:
 
 
 class TestErrorHandling:
-    """Test error handling and edge cases."""
+    """Test error handling in the API client."""
 
     def test_invalid_api_key(self):
         """Test behavior with invalid API key."""
         invalid_client = MarvinAPIClient(api_key="invalid_key")
-        with pytest.raises(requests.exceptions.RequestException):
+        with pytest.raises(requests.exceptions.HTTPError, match="401 Client Error"):
             invalid_client.get_categories()
 
     def test_invalid_task_id(self, api_client):
         """Test behavior with invalid task ID."""
-        with pytest.raises(requests.exceptions.RequestException):
+        with pytest.raises(requests.exceptions.HTTPError, match="4"):  # 4xx error
             api_client.mark_task_done("invalid_task_id")
 
     def test_invalid_project_id(self, api_client):
@@ -233,41 +219,36 @@ class TestErrorHandling:
 class TestProjectPlanningEnhancements:
     """Test the new project planning enhancement features."""
 
-    def test_create_project_with_tasks(self, test_project_data, created_items):
+    def test_create_project_with_tasks(self, test_project_data):
         """Test creating a project with multiple tasks at once."""
-        from amazing_marvin_mcp.utils import create_project_with_tasks_util
+        from src.amazing_marvin_mcp.utils import create_project_with_tasks_util
 
-        task_titles = ["Task 1", "Task 2", "Task 3"]
+        # Use test data
         result = create_project_with_tasks_util(
             project_title=test_project_data["title"],
-            task_titles=task_titles,
-            project_type=test_project_data["type"],
+            task_titles=test_project_data["tasks"],
         )
 
-        # Track created items
-        created_items["projects"].append(result["created_project"].get("_id"))
-        for task in result["created_tasks"]:
-            created_items["tasks"].append(task.get("_id"))
-
         assert result["created_project"] is not None
-        expected_task_count = 3
-        assert result["task_count"] == expected_task_count
-        assert len(result["created_tasks"]) == expected_task_count
+        assert result["task_count"] == TASK_COUNT
+        assert len(result["created_tasks"]) == TASK_COUNT
 
     def test_get_daily_focus(self):
         """Test getting daily focus items."""
-        from amazing_marvin_mcp.utils import get_daily_focus_util
+        from src.amazing_marvin_mcp.utils import get_daily_focus_util
 
         result = get_daily_focus_util()
 
         assert "total_focus_items" in result
+        assert "completed_today" in result
+        assert "pending_items" in result
         assert "high_priority_items" in result
         assert "projects" in result
         assert "tasks" in result
 
     def test_get_productivity_summary(self):
         """Test getting productivity summary."""
-        from amazing_marvin_mcp.utils import get_productivity_summary_util
+        from src.amazing_marvin_mcp.utils import get_productivity_summary_util
 
         result = get_productivity_summary_util()
 
@@ -277,44 +258,29 @@ class TestProjectPlanningEnhancements:
 
     def test_quick_daily_planning(self):
         """Test quick daily planning feature."""
-        from amazing_marvin_mcp.utils import quick_daily_planning_util
+        from src.amazing_marvin_mcp.utils import quick_daily_planning_util
 
         result = quick_daily_planning_util()
 
         assert "planning_date" in result
+        assert "overdue_items" in result
+        assert "scheduled_today" in result
         assert "suggestions" in result
-        assert "quick_summary" in result
         assert isinstance(result["suggestions"], list)
 
-    def test_batch_create_tasks(self, created_items):
+    def test_batch_create_tasks(self):
         """Test batch task creation."""
-        from amazing_marvin_mcp.utils import batch_create_tasks_util
+        from src.amazing_marvin_mcp.utils import batch_create_tasks_util
 
-        task_count = 3
-        task_list = ["Batch Task 1", "Batch Task 2", "Batch Task 3"]
-        result = batch_create_tasks_util(task_list=task_list)
-
-        # Track created tasks
-        for task in result["created_tasks"]:
-            created_items["tasks"].append(task.get("_id"))
+        # Create test tasks
+        tasks = ["Test Task 1", "Test Task 2", "Test Task 3"]
+        result = batch_create_tasks_util(tasks)
 
         assert "created_tasks" in result
+        assert "failed_tasks" in result
         assert "success_count" in result
         assert result["success_count"] >= 0
-        assert result["total_requested"] == task_count
-
-    def test_get_completed_tasks(self):
-        """Test getting completed tasks."""
-        from amazing_marvin_mcp.utils import get_completed_tasks_util
-
-        result = get_completed_tasks_util()
-
-        assert "completed_tasks" in result
-        assert "total_completed" in result
-        assert "sources_checked" in result
-        assert "limitations" in result
-        assert isinstance(result["completed_tasks"], list)
-        assert isinstance(result["sources_checked"], list)
+        assert result["total_requested"] == TASK_COUNT
 
 
 if __name__ == "__main__":

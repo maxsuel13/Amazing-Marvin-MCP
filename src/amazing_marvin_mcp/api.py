@@ -54,10 +54,13 @@ class MarvinAPIClient:
             logger.exception("Request error")
             raise
 
-    def get_tasks(self) -> List[Dict]:
+    def get_tasks(self, date: Optional[str] = None) -> List[Dict]:
         """Get all tasks and projects (use /todayItems or /dueItems for scheduled/due, or /children for subtasks)"""
         # The Marvin API does not provide a /tasks endpoint. Use /todayItems for scheduled items, /dueItems for due, or /children for subtasks.
-        return self._make_request("get", "/todayItems")
+        endpoint = "/todayItems"
+        if date:
+            endpoint += f"?date={date}"
+        return self._make_request("get", endpoint)
 
     def get_task(self, task_id: str) -> Dict:
         """Get a specific task or project by ID (requires full access token, not supported by default API token)"""
@@ -86,6 +89,46 @@ class MarvinAPIClient:
     def get_due_items(self) -> List[Dict]:
         """Get all due items (experimental endpoint)"""
         return self._make_request("get", "/dueItems")
+
+    def get_done_items(self, date: Optional[str] = None) -> List[Dict]:
+        """Get completed/done items, optionally filtered by completion date
+
+        Args:
+            date: Optional date in YYYY-MM-DD format to filter by completion date.
+                 If not provided, defaults to today's completed items.
+
+        Returns:
+            List of completed items, filtered by completion date if specified
+        """
+        endpoint = "/doneItems"
+        if date:
+            endpoint += f"?date={date}"
+        return self._make_request("get", endpoint)
+
+    def get_all_tasks_for_date(self, date: str) -> List[Dict]:
+        """Get all tasks for a specific date, including completed ones.
+
+        Args:
+            date: Date in YYYY-MM-DD format
+
+        Returns:
+            List of tasks for that date (both completed and pending)
+        """
+        try:
+            # Try different approaches to get completed tasks
+            result = []
+
+            # 1. Try todayItems with date parameter
+            today_items = self._make_request("get", f"/todayItems?date={date}")
+            result.extend(today_items)
+
+            # 2. Try any additional endpoints that might have completed tasks
+            # The API might have other ways to access completed items
+        except Exception as e:
+            logger.warning("Could not get tasks for date %s: %s", date, e)
+            return []
+        else:
+            return result
 
     def get_children(self, parent_id: str) -> List[Dict]:
         """Get child tasks of a specific parent task or project (experimental endpoint)"""
