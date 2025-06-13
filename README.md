@@ -48,6 +48,44 @@ You can easily install this MCP with [Smithery](https://smithery.ai/):
 smithery install @bgheneti/amazing-marvin-mcp
 ```
 
+## Development
+
+### Development Setup
+
+1. Clone the repository:
+```bash
+git clone https://github.com/bgheneti/Amazing-Marvin-MCP.git
+cd Amazing-Marvin-MCP
+```
+
+2. Install development dependencies:
+```bash
+pip install -e ".[dev]"
+```
+
+3. Install pre-commit hooks:
+```bash
+pre-commit install
+```
+
+### Running Tests
+
+```bash
+pytest tests/ -v
+```
+
+### Code Quality
+
+This project uses pre-commit hooks for code quality:
+- **ruff** for linting and formatting
+- **mypy** for type checking
+- **pytest** for testing
+
+Run all checks manually:
+```bash
+pre-commit run --all-files
+```
+
 Or visit the [Smithery registry page](https://smithery.ai/server/@bgheneti/amazing-marvin-mcp) for more installation options.
 
 ### Manual Installation
@@ -153,7 +191,7 @@ This will start the server on port 3000 by default. You can customize the port b
 ### Querying for context
 
 The MCP will respond to different query types:
-- Tasks/todos: Any query containing "task" or "todo"  
+- Tasks/todos: Any query containing "task" or "todo"
 - Projects: Any query containing "project"
 - Categories: Any query containing "category" or "categor"
 - Specific dates: Any query containing a date in YYYY-MM-DD format
@@ -163,7 +201,7 @@ If no specific context is requested, it will default to returning your tasks.
 
 ## Default Projects and Inbox
 
-When you connect your Amazing Marvin account, the MCP will recognize **Work** and **Personal** as default projects that are automatically created for most users. These help you organize your tasks into common categories right from the start.  
+When you connect your Amazing Marvin account, the MCP will recognize **Work** and **Personal** as default projects that are automatically created for most users. These help you organize your tasks into common categories right from the start.
 Additionally, the **Inbox** serves as a special area for capturing uncategorized tasks before you sort them into projects.
 
 - **Work**: Default project for professional or job-related tasks.

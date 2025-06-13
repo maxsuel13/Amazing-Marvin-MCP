@@ -30,7 +30,7 @@ mcp:
     - name: tasks
       description: Access to Amazing Marvin tasks
     - name: projects
-      description: Access to Amazing Marvin projects  
+      description: Access to Amazing Marvin projects
     - name: categories
       description: Access to Amazing Marvin categories
 
@@ -41,7 +41,7 @@ tags:
   - amazing-marvin
   - mcp
   - ai-assistant
-  
+
 homepage: https://github.com/bgheneti/Amazing-Marvin-MCP
 repository: https://github.com/bgheneti/Amazing-Marvin-MCP
 documentation: https://github.com/bgheneti/Amazing-Marvin-MCP#readme

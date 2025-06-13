@@ -29,9 +29,10 @@ dependencies = [
 [project.optional-dependencies]
 dev = [
     "pytest>=6.0.0",
-    "black>=21.5b2",
-    "isort>=5.8.0",
+    "ruff>=0.1.0",
     "mypy>=0.812",
+    "pre-commit>=3.0.0",
+    "types-requests>=2.25.0",
 ]
 
 [project.scripts]
@@ -48,6 +49,25 @@ line_length = 88
 [tool.black]
 line-length = 88
 target-version = ['py38']
+
+[tool.ruff]
+line-length = 88
+target-version = "py38"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "C90", "I", "N", "UP", "B", "A", "C4", "DJ", "EM", "EXE", "ISC", "ICN", "G", "PIE", "T20", "PYI", "PT", "Q", "RSE", "RET", "SLF", "SIM", "TID", "TCH", "ARG", "PTH", "ERA", "PD", "PGH", "PL", "TRY", "NPY", "RUF"]
+ignore = ["E501", "PLR0913", "PLR0912", "PLR0915", "TRY003", "EM101", "EM102"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+
+[tool.mypy]
+python_version = "3.8"
+ignore_missing_imports = true
+strict_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
 
 [tool.smithery]
 name = "amazing-marvin-mcp"
