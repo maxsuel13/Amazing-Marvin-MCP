@@ -25,6 +25,10 @@
 
 The **Amazing Marvin MCP** bridges your [Amazing Marvin](https://amazingmarvin.com/) productivity system with AI assistants like Claude, Cursor, and others. Instead of manually copying your tasks and projects into chat, your AI can directly access and understand your productivity data.
 
+## Why?
+
+Because I love using Amazing Marvin and want it to play nice with my other tools :)
+
 ### ✨ Key Benefits
 
 - 🔄 **Real-time sync** - Your AI always sees your current tasks, projects, and categories
