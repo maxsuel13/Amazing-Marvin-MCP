@@ -54,41 +54,36 @@ Ask your AI: *"What tasks do I have today?"*
 
 ## 🛠️ What can you do with this?
 
-Once connected, your AI becomes your productivity co-pilot:
+This integration connects your Amazing Marvin data with AI assistants, helping you manage your productivity system more effectively. Here's what you can accomplish:
 
-### 📅 Daily Planning
-> *"What are my top 3 priorities today based on my Amazing Marvin tasks?"*
+### 📋 Task Management
+> *"What tasks are on my schedule today?"*
+> *"What's due this week?"*
+> *"Show me my high-priority tasks"*
 
-### 🎯 Project Management
-> *"Show me all tasks in my 'Website Redesign' project and suggest what to work on next"*
+### 🗂️ Project Organization
+> *"Show me all tasks in my birthday scavenger hunt project"*
+> *"What's the progress on my current projects?"*
+> *"Help me organize these tasks into projects"*
 
-### ⏰ Deadline Management
-> *"What items are overdue? Help me create a plan to catch up"*
+### 🧠 Planning & Focus
+> *"What should I focus on today based on my priorities?"*
+> *"Plan my day based on my current deadlines and goals"*
+> *"I'm feeling overwhelmed - help me identify my most important tasks"*
 
-### 📊 Productivity Insights
-> *"Analyze my task completion patterns and suggest improvements"*
+### ✅ Productivity Tracking
+> *"How many tasks have I completed today?"*
+> *"Show me my productivity for last week"*
+> *"What did I accomplish on Tuesday?"*
 
-### 🔍 Smart Filtering
-> *"Find all tasks related to client work that are due this week"*
+### ⏱️ Time Management
+> *"Start tracking time on my current task"*
+> *"What am I currently tracking time on?"*
+> *"Stop tracking time on this task"*
 
-### 📋 Context-Aware Help
-> *"I'm feeling overwhelmed. Based on my current workload, what should I focus on?"*
+The integration provides actual data from your Amazing Marvin account, allowing your AI assistant to give personalized productivity advice rather than generic suggestions.
 
-### 🎉 Progress Tracking
-> *"Show me what I've completed today and what's still pending"*
-
-### 📈 Project Progress
-> *"Give me a progress overview of my 'Website Redesign' project with completed vs pending tasks"*
-
-### 📊 Time Range Analytics
-> *"Show me my productivity summary for the past week - which days were most productive?"*
-> *"Give me a 30-day productivity analysis"*
-> *"How productive was I in the last 3 days?"*
-> *"Analyze my productivity from June 1st to June 10th"*
-> *"Show me productivity data from March 1st to today"*
-
-### 📅 Historical Analysis
-> *"What did I complete on June 10th? Show me tasks by project"*
+**Limitations:** While this covers most core features, some advanced Amazing Marvin capabilities like strategies, customizations, and reward systems have limited API support.
 
 ## 📦 Installation
 
@@ -453,22 +448,22 @@ The MCP provides 27 comprehensive tools to AI assistants:
 
 **Rate Limiting:**
 - Amazing Marvin API has rate limits on requests per minute
-- The MCP makes individual API calls for each request
+- The MCP makes API calls as needed for each request
 - Historical data is cached for 10 minutes to reduce API load
-- Be mindful of making too many rapid requests
+- Rate limit errors (429) may occur with frequent requests
 
-**API Endpoint Limitations:**
-- `/doneItems` endpoint: Efficiently filters by completion date
-- `/todayItems` endpoint: Only returns pending tasks (completed tasks are excluded)
-- `/children` endpoint: Only returns tasks/projects for specific parent IDs
-- No bulk historical export - data must be fetched by date ranges
-- Some advanced Amazing Marvin features not exposed via API (strategies, rewards setup)
+**API Endpoint Characteristics:**
+- `/doneItems`: Provides completed tasks, can be filtered by date
+- `/todayItems`: Returns scheduled tasks for the current day
+- `/children`: Returns tasks belonging to a specific parent/project
+- `/categories`: Returns projects and categories
+- Data must be fetched through specific endpoints - no bulk data export
 
-**Performance Considerations:**
-- Large date ranges (30+ days) will make multiple API calls
-- Use batch operations when available (like `batch_create_tasks()`)
-- Cache is automatically managed but cleared on restart
-- Today's data is never cached (always fresh)
+**Performance Optimization:**
+- Historical data is cached for 10 minutes (except today's data)
+- Multiple API calls may be required for comprehensive queries
+- Batch operations are available for task creation and completion
+- Cache is cleared after 1 hour of inactivity
 
 ## 📄 License
 
@@ -478,8 +473,8 @@ MIT License - see [LICENSE](https://opensource.org/licenses/MIT) for details.
 
 <div align="center">
 
-**Made with ❤️ for Amazing Marvin users**
+**Developed for Amazing Marvin users**
 
-[🐛 Report Issues](https://github.com/bgheneti/Amazing-Marvin-MCP/issues) • [💡 Request Features](https://github.com/bgheneti/Amazing-Marvin-MCP/issues/new) • [⭐ Star on GitHub](https://github.com/bgheneti/Amazing-Marvin-MCP)
+[Report Issues](https://github.com/bgheneti/Amazing-Marvin-MCP/issues) • [Request Features](https://github.com/bgheneti/Amazing-Marvin-MCP/issues/new) • [Star on GitHub](https://github.com/bgheneti/Amazing-Marvin-MCP)
 
 </div>
