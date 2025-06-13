@@ -47,6 +47,7 @@ Because I love using Amazing Marvin and want it to play nice with my other tools
 ```bash
 npx -y @smithery/cli install @bgheneti/amazing-marvin-mcp --client claude
 ```
+Paste the API key when prompted
 
 ### Step 3: Verify it's working
 Ask your AI: *"What tasks do I have today?"*
