@@ -1,19 +1,47 @@
-# Smithery configuration file: https://smithery.ai/docs/build/project-config
+name: amazing-marvin-mcp
+display_name: Amazing Marvin MCP
+description: Model Context Provider for Amazing Marvin productivity app that provides access to your tasks, projects, and categories
+version: 0.1.0
+author: bgheneti
+license: MIT
 
-startCommand:
-  type: stdio
-  commandFunction:
-    # A JS function that produces the CLI command based on the given config to start the MCP on stdio.
-    |-
-    (config) => ({ command: 'amazing-marvin-mcp', args: [], env: { AMAZING_MARVIN_API_KEY: config.amazingMarvinApiKey } })
-  configSchema:
-    # JSON Schema defining the configuration options for the MCP.
-    type: object
-    required:
-      - amazingMarvinApiKey
-    properties:
-      amazingMarvinApiKey:
-        type: string
-        description: Amazing Marvin API key
-  exampleConfig:
-    amazingMarvinApiKey: your-api-key-here
+# Local installation configuration
+local:
+  command: python
+  args: ["-m", "amazing_marvin_mcp"]
+  environment_variables:
+    - AMAZING_MARVIN_API_KEY
+
+# Remote/hosted configuration
+remote:
+  runtime: python
+  python_version: "3.8"
+  entry_point: "amazing_marvin_mcp.main:start"
+  environment_variables:
+    - AMAZING_MARVIN_API_KEY
+  dependencies_file: pyproject.toml
+
+# MCP Server configuration
+mcp:
+  transport: sse
+  capabilities:
+    - resources
+  resources:
+    - name: tasks
+      description: Access to Amazing Marvin tasks
+    - name: projects
+      description: Access to Amazing Marvin projects  
+    - name: categories
+      description: Access to Amazing Marvin categories
+
+# Metadata
+tags:
+  - productivity
+  - task-management
+  - amazing-marvin
+  - mcp
+  - ai-assistant
+  
+homepage: https://github.com/bgheneti/Amazing-Marvin-MCP
+repository: https://github.com/bgheneti/Amazing-Marvin-MCP
+documentation: https://github.com/bgheneti/Amazing-Marvin-MCP#readme

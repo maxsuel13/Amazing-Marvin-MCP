@@ -1,0 +1,2 @@
+[console_scripts]
+amazing-marvin-mcp = amazing_marvin_mcp.main:start
