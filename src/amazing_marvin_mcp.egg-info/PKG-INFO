@@ -1,9 +1,30 @@
-# Amazing Marvin Model Context Provider
+Metadata-Version: 2.4
+Name: amazing-marvin-mcp
+Version: 0.1.0
+Summary: Amazing Marvin Model Context Provider
+Author-email: bgheneti <bgheneti@users.noreply.github.com>
+License: MIT
+Project-URL: Homepage, https://github.com/bgheneti/Amazing-Marvin-MCP
+Project-URL: Bug Tracker, https://github.com/bgheneti/Amazing-Marvin-MCP/issues
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+Requires-Dist: fastapi>=0.68.0
+Requires-Dist: fastmcp>=0.1.0
+Requires-Dist: requests>=2.25.1
+Requires-Dist: uvicorn>=0.15.0
+Requires-Dist: pydantic>=2.0.0
+Requires-Dist: pydantic-settings>=2.0.0
+Requires-Dist: python-dotenv>=0.19.0
+Provides-Extra: dev
+Requires-Dist: pytest>=6.0.0; extra == "dev"
+Requires-Dist: black>=21.5b2; extra == "dev"
+Requires-Dist: isort>=5.8.0; extra == "dev"
+Requires-Dist: mypy>=0.812; extra == "dev"
 
-[![PyPI version](https://badge.fury.io/py/amazing-marvin-mcp.svg)](https://badge.fury.io/py/amazing-marvin-mcp)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
-[![Model Context Protocol](https://img.shields.io/badge/MCP-Compatible-brightgreen.svg)](https://modelcontextprotocol.io/)
+# Amazing Marvin Model Context Provider
 
 This is a Model Context Provider for [Amazing Marvin](https://amazingmarvin.com/) that provides your tasks, projects, categories, and other data from your Marvin account to AI models.
 
@@ -14,36 +35,24 @@ This is a Model Context Provider for [Amazing Marvin](https://amazingmarvin.com/
 - Easy to install and configure
 - Compatible with AI assistants that support context providers
 
-## Prerequisites
+## Installation
 
+### Requirements
 - Python >= 3.8
 - Cursor, Windsurf, Claude Desktop or another MCP Client
 - Amazing Marvin account with API access
 
-### Getting Your API Key
-
-You'll need an API key from Amazing Marvin to use this MCP:
-
-1. Go to Settings in Amazing Marvin
-2. Navigate to the API section
-3. Enable the API and copy your API token
-
-## Installation
-
 ### Using Smithery (Recommended)
 
-You can easily install this MCP with [Smithery](https://smithery.ai/):
+You can easily install this MCP with [Smithery](https://github.com/ai-smith/smithery):
 
 ```bash
-smithery install @bgheneti/amazing-marvin-mcp
+smithery install amazing-marvin-mcp
 ```
-
-Or visit the [Smithery registry page](https://smithery.ai/server/@bgheneti/amazing-marvin-mcp) for more installation options.
 
 ### Manual Installation
 
-<details>
-<summary><strong>Claude Desktop Configuration</strong></summary>
+#### Claude Desktop
 
 Add this to your `claude_desktop_config.json`:
 
@@ -60,10 +69,8 @@ Add this to your `claude_desktop_config.json`:
  }
 }
 ```
-</details>
 
-<details>
-<summary><strong>Cursor Configuration</strong></summary>
+#### Cursor
 
 Add this to your MCP settings:
 
@@ -80,10 +87,8 @@ Add this to your MCP settings:
  }
 }
 ```
-</details>
 
-<details>
-<summary><strong>VS Code Configuration</strong></summary>
+#### VS Code
 
 Add this to your VS Code MCP settings:
 
@@ -100,7 +105,6 @@ Add this to your VS Code MCP settings:
  }
 }
 ```
-</details>
 
 #### Using pip
 
@@ -118,13 +122,19 @@ pip install -e .
 
 ## Configuration
 
-Set your API key as an environment variable:
+You'll need an API key from Amazing Marvin to use this MCP. You can get your API key by:
+
+1. Going to Settings in Amazing Marvin
+2. Navigating to the API section
+3. Enabling the API and copying your API token
+
+Then set the API key as an environment variable:
 
 ```bash
 export AMAZING_MARVIN_API_KEY="your-api-key"
 ```
 
-Alternatively, create a `.env` file in the project root:
+Alternatively, create a `.env` file in the root directory with:
 
 ```
 AMAZING_MARVIN_API_KEY=your-api-key
@@ -167,17 +177,9 @@ You can rename, remove, or add more projects as needed.
 ### Setup
 
 ```bash
-git clone https://github.com/bgheneti/Amazing-Marvin-MCP.git
+git clone https://github.com/YOUR_USERNAME/Amazing-Marvin-MCP.git
 cd Amazing-Marvin-MCP
 pip install -e ".[dev]"
-```
-
-### Environment Variables
-
-Set your API key for development:
-
-```bash
-export AMAZING_MARVIN_API_KEY="your-api-key"
 ```
 
 ### Testing
