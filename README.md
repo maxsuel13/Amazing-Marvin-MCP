@@ -3,7 +3,6 @@
 [![PyPI version](https://img.shields.io/pypi/v/amazing-marvin-mcp.svg)](https://pypi.org/project/amazing-marvin-mcp/)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![PyPI downloads](https://img.shields.io/pypi/dm/amazing-marvin-mcp.svg)](https://pypi.org/project/amazing-marvin-mcp/)
 [![Model Context Protocol](https://img.shields.io/badge/MCP-Compatible-brightgreen.svg)](https://modelcontextprotocol.io/)
 [![smithery badge](https://smithery.ai/badge/@bgheneti/amazing-marvin-mcp)](https://smithery.ai/server/@bgheneti/amazing-marvin-mcp)
 
