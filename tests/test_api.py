@@ -3,9 +3,9 @@
 from datetime import datetime
 
 import pytest
-
-from src.amazing_marvin_mcp.api import MarvinAPIClient
-from src.amazing_marvin_mcp.config import get_settings
+import requests
+from amazing_marvin_mcp.api import MarvinAPIClient
+from amazing_marvin_mcp.config import get_settings
 
 
 @pytest.fixture()
@@ -215,12 +215,12 @@ class TestErrorHandling:
     def test_invalid_api_key(self):
         """Test behavior with invalid API key."""
         invalid_client = MarvinAPIClient(api_key="invalid_key")
-        with pytest.raises(Exception):
+        with pytest.raises(requests.exceptions.RequestException):
             invalid_client.get_categories()
 
     def test_invalid_task_id(self, api_client):
         """Test behavior with invalid task ID."""
-        with pytest.raises(Exception):
+        with pytest.raises(requests.exceptions.RequestException):
             api_client.mark_task_done("invalid_task_id")
 
     def test_invalid_project_id(self, api_client):
@@ -233,9 +233,9 @@ class TestErrorHandling:
 class TestProjectPlanningEnhancements:
     """Test the new project planning enhancement features."""
 
-    def test_create_project_with_tasks(self, api_client, test_project_data):
+    def test_create_project_with_tasks(self, test_project_data, created_items):
         """Test creating a project with multiple tasks at once."""
-        from src.amazing_marvin_mcp.utils import create_project_with_tasks_util
+        from amazing_marvin_mcp.utils import create_project_with_tasks_util
 
         task_titles = ["Task 1", "Task 2", "Task 3"]
         result = create_project_with_tasks_util(
@@ -244,13 +244,19 @@ class TestProjectPlanningEnhancements:
             project_type=test_project_data["type"],
         )
 
-        assert result["created_project"] is not None
-        assert result["task_count"] == 3
-        assert len(result["created_tasks"]) == 3
+        # Track created items
+        created_items["projects"].append(result["created_project"].get("_id"))
+        for task in result["created_tasks"]:
+            created_items["tasks"].append(task.get("_id"))
 
-    def test_get_daily_focus(self, api_client):
+        assert result["created_project"] is not None
+        expected_task_count = 3
+        assert result["task_count"] == expected_task_count
+        assert len(result["created_tasks"]) == expected_task_count
+
+    def test_get_daily_focus(self):
         """Test getting daily focus items."""
-        from src.amazing_marvin_mcp.utils import get_daily_focus_util
+        from amazing_marvin_mcp.utils import get_daily_focus_util
 
         result = get_daily_focus_util()
 
@@ -259,9 +265,9 @@ class TestProjectPlanningEnhancements:
         assert "projects" in result
         assert "tasks" in result
 
-    def test_get_productivity_summary(self, api_client):
+    def test_get_productivity_summary(self):
         """Test getting productivity summary."""
-        from src.amazing_marvin_mcp.utils import get_productivity_summary_util
+        from amazing_marvin_mcp.utils import get_productivity_summary_util
 
         result = get_productivity_summary_util()
 
@@ -269,9 +275,9 @@ class TestProjectPlanningEnhancements:
         assert "active_goals" in result
         assert "summary" in result
 
-    def test_quick_daily_planning(self, api_client):
+    def test_quick_daily_planning(self):
         """Test quick daily planning feature."""
-        from src.amazing_marvin_mcp.utils import quick_daily_planning_util
+        from amazing_marvin_mcp.utils import quick_daily_planning_util
 
         result = quick_daily_planning_util()
 
@@ -280,23 +286,27 @@ class TestProjectPlanningEnhancements:
         assert "quick_summary" in result
         assert isinstance(result["suggestions"], list)
 
-    def test_batch_create_tasks(self, api_client):
+    def test_batch_create_tasks(self, created_items):
         """Test batch task creation."""
-        from src.amazing_marvin_mcp.utils import batch_create_tasks_util
+        from amazing_marvin_mcp.utils import batch_create_tasks_util
 
+        task_count = 3
         task_list = ["Batch Task 1", "Batch Task 2", "Batch Task 3"]
         result = batch_create_tasks_util(task_list=task_list)
+
+        # Track created tasks
+        for task in result["created_tasks"]:
+            created_items["tasks"].append(task.get("_id"))
 
         assert "created_tasks" in result
         assert "success_count" in result
         assert result["success_count"] >= 0
-        assert result["total_requested"] == 3
+        assert result["total_requested"] == task_count
 
-    def test_get_completed_tasks(self, api_client):
+    def test_get_completed_tasks(self):
         """Test getting completed tasks."""
-        from src.amazing_marvin_mcp.utils import get_completed_tasks_util
+        from amazing_marvin_mcp.utils import get_completed_tasks_util
 
-        # api_client fixture ensures API is available for the utility function
         result = get_completed_tasks_util()
 
         assert "completed_tasks" in result

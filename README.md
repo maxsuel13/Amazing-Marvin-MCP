@@ -74,6 +74,8 @@ pre-commit install
 pytest tests/ -v
 ```
 
+**Note**: Tests create temporary projects and tasks in your Amazing Marvin account with `[TEST]` prefixes. Due to API limitations, these cannot be automatically deleted and may need manual cleanup in the Amazing Marvin app.
+
 ### Code Quality
 
 This project uses pre-commit hooks for code quality:

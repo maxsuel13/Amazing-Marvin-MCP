@@ -25,7 +25,7 @@ class MarvinAPIClient:
     ) -> Any:
         """Make a request to the API"""
         url = f"{self.base_url}{endpoint}"
-        logger.debug(f"Making {method} request to {url}")
+        logger.debug("Making %s request to %s", method, url)
 
         try:
             if method.lower() == "get":
@@ -42,15 +42,16 @@ class MarvinAPIClient:
             response.raise_for_status()
 
             # Handle 204 No Content responses
-            if response.status_code == 204 or not response.content:
+            no_content_status = 204
+            if response.status_code == no_content_status or not response.content:
                 return {}
 
             return response.json()
-        except requests.exceptions.HTTPError as e:
-            logger.exception(f"HTTP error: {e}")
+        except requests.exceptions.HTTPError:
+            logger.exception("HTTP error")
             raise
-        except requests.exceptions.RequestException as e:
-            logger.exception(f"Request error: {e}")
+        except requests.exceptions.RequestException:
+            logger.exception("Request error")
             raise
 
     def get_tasks(self) -> List[Dict]:
@@ -91,9 +92,10 @@ class MarvinAPIClient:
         try:
             return self._make_request("get", f"/children?parentId={parent_id}")
         except requests.exceptions.HTTPError as e:
-            if e.response.status_code == 404:
+            not_found_status = 404
+            if e.response.status_code == not_found_status:
                 logger.warning(
-                    f"Children endpoint not available for parent {parent_id}"
+                    "Children endpoint not available for parent %s", parent_id
                 )
                 return []
             raise
@@ -117,8 +119,8 @@ class MarvinAPIClient:
             response = requests.post(url, headers=self.headers)
             response.raise_for_status()
             return response.text.strip()  # Returns "OK" as plain text
-        except requests.exceptions.RequestException as e:
-            logger.exception(f"API connection test failed: {e}")
+        except requests.exceptions.RequestException:
+            logger.exception("API connection test failed")
             raise
 
     def start_time_tracking(self, task_id: str) -> Dict:

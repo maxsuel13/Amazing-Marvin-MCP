@@ -34,6 +34,6 @@ def get_settings() -> Settings:
     """Get configuration settings with environment variable validation"""
     try:
         return Settings()
-    except Exception as e:
-        logger.exception(f"Configuration error: {e}")
+    except Exception:
+        logger.exception("Configuration error")
         raise

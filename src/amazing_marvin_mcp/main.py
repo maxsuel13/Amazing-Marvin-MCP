@@ -14,7 +14,7 @@ mcp = FastMCP(name="amazing-marvin-mcp")
 
 
 @mcp.tool()
-async def get_tasks(query: str = "all") -> Dict[str, Any]:
+async def get_tasks() -> Dict[str, Any]:
     """Get tasks from Amazing Marvin"""
     settings = get_settings()
     api_client = MarvinAPIClient(api_key=settings.amazing_marvin_api_key)
@@ -167,12 +167,12 @@ async def get_kudos_info() -> Dict[str, Any]:
 
 
 @mcp.tool()
-async def create_project(title: str, type: str = "project") -> Dict[str, Any]:
+async def create_project(title: str, project_type: str = "project") -> Dict[str, Any]:
     """Create a new project in Amazing Marvin"""
     settings = get_settings()
     api_client = MarvinAPIClient(api_key=settings.amazing_marvin_api_key)
 
-    project_data = {"title": title, "type": type}
+    project_data = {"title": title, "type": project_type}
     return {"created_project": api_client.create_project(project_data)}
 
 

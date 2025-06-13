@@ -1,10 +1,13 @@
 """Utility functions for Amazing Marvin MCP that can be tested independently."""
 
+import logging
 from datetime import datetime
 from typing import Any, Dict, List, Optional
 
 from .api import MarvinAPIClient
 from .config import get_settings
+
+logger = logging.getLogger(__name__)
 
 
 def create_project_with_tasks_util(
@@ -183,10 +186,11 @@ def quick_daily_planning_util() -> Dict[str, Any]:
     today = datetime.now().strftime("%Y-%m-%d")
 
     # Simple prioritization suggestions
+    heavy_day_threshold = 5
     suggestions = []
     if total_due > 0:
         suggestions.append(f"Focus on {total_due} overdue items first")
-    if total_scheduled > 5:
+    if total_scheduled > heavy_day_threshold:
         suggestions.append("Consider rescheduling some tasks - you have a heavy day")
     if total_scheduled == 0 and total_due == 0:
         suggestions.append("Great! No urgent tasks today - time to work on your goals")
@@ -221,8 +225,8 @@ def get_completed_tasks_util() -> Dict[str, Any]:
         completed_today = [task for task in today_items if task.get("done", False)]
         completed_tasks.extend(completed_today)
         sources_checked.append("today_items")
-    except Exception as e:
-        logger.warning(f"Could not check today's items: {e}")
+    except Exception:
+        logger.warning("Could not check today's items")
 
     # Check projects for completed tasks
     try:
@@ -236,8 +240,8 @@ def get_completed_tasks_util() -> Dict[str, Any]:
                 ]
                 completed_tasks.extend(completed_children)
         sources_checked.append("project_children")
-    except Exception as e:
-        logger.warning(f"Could not check project children: {e}")
+    except Exception:
+        logger.warning("Could not check project children")
 
     # Check for unassigned completed tasks
     try:
@@ -245,8 +249,8 @@ def get_completed_tasks_util() -> Dict[str, Any]:
         completed_unassigned = [task for task in unassigned if task.get("done", False)]
         completed_tasks.extend(completed_unassigned)
         sources_checked.append("unassigned_tasks")
-    except Exception as e:
-        logger.warning(f"Could not check unassigned tasks: {e}")
+    except Exception:
+        logger.warning("Could not check unassigned tasks")
 
     # Remove duplicates based on task ID
     unique_completed = []
