@@ -40,11 +40,18 @@ This connects your [Amazing Marvin](https://amazingmarvin.com/) productivity sys
 2. Enable the API and copy your token
 3. Keep this handy! 🔑
 
-### Step 2: Install via Smithery (Recommended)
+### Step 2: Install
+**Easy way (Smithery):**
 ```bash
 npx -y @smithery/cli install @bgheneti/amazing-marvin-mcp --client claude
 ```
 Paste the API key when prompted
+
+**Power user way (pip):**
+```bash
+pip install amazing-marvin-mcp
+```
+Then add to your AI client config (see [installation guide](#-installation))
 
 ### Step 3: Verify it's working
 Ask your AI: *"What tasks do I have today?"*
@@ -94,19 +101,40 @@ npx -y @smithery/cli install @bgheneti/amazing-marvin-mcp --client claude
 ```
 [Visit Smithery Registry](https://smithery.ai/server/@bgheneti/amazing-marvin-mcp) for other clients.
 
-### Option 2: Manual Installation
+### Option 2: Pip + Manual Config (Recommended for Advanced Users)
+
+**Why choose this option:**
+- ✅ Always get the latest version from PyPI
+- ✅ Standard Python package management
+- ✅ Works with any MCP-compatible AI client
+- ✅ Easy to update: just `pip install --upgrade amazing-marvin-mcp`
 
 #### Prerequisites
-- ✅ Python 3.8+
+- ✅ Python 3.10+ ([Download](https://www.python.org/downloads/))
 - ✅ Claude Desktop, Cursor, Windsurf, or another MCP client
 - ✅ Amazing Marvin account with API access
 
-#### Via pip
+#### Installation
 ```bash
+# Install from PyPI (recommended)
 pip install amazing-marvin-mcp
+
+# Or install latest development version
+pip install git+https://github.com/bgheneti/Amazing-Marvin-MCP.git
 ```
 
-#### From source
+#### Test the installation
+```bash
+python -m amazing_marvin_mcp --help
+```
+
+#### Upgrade to latest version
+```bash
+pip install --upgrade amazing-marvin-mcp
+```
+
+### Option 3: Development Installation
+
 ```bash
 git clone https://github.com/bgheneti/Amazing-Marvin-MCP.git
 cd Amazing-Marvin-MCP
@@ -114,6 +142,8 @@ pip install -e .
 ```
 
 #### 📱 Client Configuration
+
+**💡 Pro tip:** After `pip install amazing-marvin-mcp`, you can use `python -m amazing_marvin_mcp` in any client configuration. No need to specify full paths or worry about virtual environments!
 
 <details>
 <summary>🖥️ Claude Desktop</summary>
