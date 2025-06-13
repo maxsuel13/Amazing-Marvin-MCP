@@ -1,5 +1,6 @@
 # Amazing Marvin Model Context Provider
 
+[![smithery badge](https://smithery.ai/badge/@bgheneti/amazing-marvin-mcp)](https://smithery.ai/server/@bgheneti/amazing-marvin-mcp)
 [![PyPI version](https://badge.fury.io/py/amazing-marvin-mcp.svg)](https://badge.fury.io/py/amazing-marvin-mcp)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
@@ -16,6 +17,15 @@ This is a Model Context Provider for [Amazing Marvin](https://amazingmarvin.com/
 
 ## Prerequisites
 
+### Installing via Smithery
+
+To install amazing-marvin-mcp for Claude Desktop automatically via [Smithery](https://smithery.ai/server/@bgheneti/amazing-marvin-mcp):
+
+```bash
+npx -y @smithery/cli install @bgheneti/amazing-marvin-mcp --client claude
+```
+
+### Requirements
 - Python >= 3.8
 - Cursor, Windsurf, Claude Desktop or another MCP Client
 - Amazing Marvin account with API access
