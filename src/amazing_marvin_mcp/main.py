@@ -1,87 +1,77 @@
 import logging
-from typing import Any, Dict, Optional
+from typing import Any, Dict, List, Optional
 
 from fastmcp import FastMCP
 
-from .api import MarvinAPIClient
-from .config import get_settings
+from .api import create_api_client
 
 # Initialize logger
 logger = logging.getLogger(__name__)
 
 # Initialize MCP
-mcp = FastMCP(name="amazing-marvin-mcp")
+mcp: FastMCP = FastMCP(name="amazing-marvin-mcp")
 
 
 @mcp.tool()
 async def get_tasks() -> Dict[str, Any]:
     """Get tasks from Amazing Marvin"""
-    settings = get_settings()
-    api_client = MarvinAPIClient(api_key=settings.amazing_marvin_api_key)
+    api_client = create_api_client()
     return {"tasks": api_client.get_tasks()}
 
 
 @mcp.tool()
 async def get_projects() -> Dict[str, Any]:
     """Get projects from Amazing Marvin"""
-    settings = get_settings()
-    api_client = MarvinAPIClient(api_key=settings.amazing_marvin_api_key)
+    api_client = create_api_client()
     return {"projects": api_client.get_projects()}
 
 
 @mcp.tool()
 async def get_categories() -> Dict[str, Any]:
     """Get categories from Amazing Marvin"""
-    settings = get_settings()
-    api_client = MarvinAPIClient(api_key=settings.amazing_marvin_api_key)
+    api_client = create_api_client()
     return {"categories": api_client.get_categories()}
 
 
 @mcp.tool()
 async def get_due_items() -> Dict[str, Any]:
     """Get all due items from Amazing Marvin"""
-    settings = get_settings()
-    api_client = MarvinAPIClient(api_key=settings.amazing_marvin_api_key)
+    api_client = create_api_client()
     return {"due_items": api_client.get_due_items()}
 
 
 @mcp.tool()
 async def get_child_tasks(parent_id: str) -> Dict[str, Any]:
     """Get child tasks of a specific parent task or project (experimental)"""
-    settings = get_settings()
-    api_client = MarvinAPIClient(api_key=settings.amazing_marvin_api_key)
+    api_client = create_api_client()
     return {"children": api_client.get_children(parent_id), "parent_id": parent_id}
 
 
 @mcp.tool()
 async def get_labels() -> Dict[str, Any]:
     """Get all labels from Amazing Marvin"""
-    settings = get_settings()
-    api_client = MarvinAPIClient(api_key=settings.amazing_marvin_api_key)
+    api_client = create_api_client()
     return {"labels": api_client.get_labels()}
 
 
 @mcp.tool()
 async def get_goals() -> Dict[str, Any]:
     """Get all goals from Amazing Marvin"""
-    settings = get_settings()
-    api_client = MarvinAPIClient(api_key=settings.amazing_marvin_api_key)
+    api_client = create_api_client()
     return {"goals": api_client.get_goals()}
 
 
 @mcp.tool()
 async def get_account_info() -> Dict[str, Any]:
     """Get account information from Amazing Marvin"""
-    settings = get_settings()
-    api_client = MarvinAPIClient(api_key=settings.amazing_marvin_api_key)
+    api_client = create_api_client()
     return {"account": api_client.get_account_info()}
 
 
 @mcp.tool()
 async def get_currently_tracked_item() -> Dict[str, Any]:
     """Get currently tracked item from Amazing Marvin"""
-    settings = get_settings()
-    api_client = MarvinAPIClient(api_key=settings.amazing_marvin_api_key)
+    api_client = create_api_client()
     return {"tracked_item": api_client.get_currently_tracked_item()}
 
 
@@ -94,8 +84,7 @@ async def create_task(
     note: Optional[str] = None,
 ) -> Dict[str, Any]:
     """Create a new task in Amazing Marvin"""
-    settings = get_settings()
-    api_client = MarvinAPIClient(api_key=settings.amazing_marvin_api_key)
+    api_client = create_api_client()
 
     task_data = {"title": title}
     if project_id:
@@ -113,64 +102,56 @@ async def create_task(
 @mcp.tool()
 async def mark_task_done(item_id: str, timezone_offset: int = 0) -> Dict[str, Any]:
     """Mark a task as completed in Amazing Marvin"""
-    settings = get_settings()
-    api_client = MarvinAPIClient(api_key=settings.amazing_marvin_api_key)
+    api_client = create_api_client()
     return {"completed_task": api_client.mark_task_done(item_id, timezone_offset)}
 
 
 @mcp.tool()
 async def test_api_connection() -> Dict[str, Any]:
     """Test the API connection and credentials"""
-    settings = get_settings()
-    api_client = MarvinAPIClient(api_key=settings.amazing_marvin_api_key)
+    api_client = create_api_client()
     return {"status": api_client.test_api_connection()}
 
 
 @mcp.tool()
 async def start_time_tracking(task_id: str) -> Dict[str, Any]:
     """Start time tracking for a specific task"""
-    settings = get_settings()
-    api_client = MarvinAPIClient(api_key=settings.amazing_marvin_api_key)
+    api_client = create_api_client()
     return {"tracking": api_client.start_time_tracking(task_id)}
 
 
 @mcp.tool()
 async def stop_time_tracking(task_id: str) -> Dict[str, Any]:
     """Stop time tracking for a specific task"""
-    settings = get_settings()
-    api_client = MarvinAPIClient(api_key=settings.amazing_marvin_api_key)
+    api_client = create_api_client()
     return {"tracking": api_client.stop_time_tracking(task_id)}
 
 
 @mcp.tool()
-async def get_time_tracks(task_ids: list) -> Dict[str, Any]:
+async def get_time_tracks(task_ids: List[str]) -> Dict[str, Any]:
     """Get time tracking data for specific tasks"""
-    settings = get_settings()
-    api_client = MarvinAPIClient(api_key=settings.amazing_marvin_api_key)
+    api_client = create_api_client()
     return {"time_tracks": api_client.get_time_tracks(task_ids)}
 
 
 @mcp.tool()
 async def claim_reward_points(points: int, item_id: str, date: str) -> Dict[str, Any]:
     """Claim reward points for completing a task"""
-    settings = get_settings()
-    api_client = MarvinAPIClient(api_key=settings.amazing_marvin_api_key)
+    api_client = create_api_client()
     return {"reward": api_client.claim_reward_points(points, item_id, date)}
 
 
 @mcp.tool()
 async def get_kudos_info() -> Dict[str, Any]:
     """Get kudos and achievement information"""
-    settings = get_settings()
-    api_client = MarvinAPIClient(api_key=settings.amazing_marvin_api_key)
+    api_client = create_api_client()
     return {"kudos": api_client.get_kudos_info()}
 
 
 @mcp.tool()
 async def create_project(title: str, project_type: str = "project") -> Dict[str, Any]:
     """Create a new project in Amazing Marvin"""
-    settings = get_settings()
-    api_client = MarvinAPIClient(api_key=settings.amazing_marvin_api_key)
+    api_client = create_api_client()
 
     project_data = {"title": title, "type": project_type}
     return {"created_project": api_client.create_project(project_data)}
@@ -178,53 +159,59 @@ async def create_project(title: str, project_type: str = "project") -> Dict[str,
 
 @mcp.tool()
 async def create_project_with_tasks(
-    project_title: str, task_titles: list, project_type: str = "project"
+    project_title: str, task_titles: List[str], project_type: str = "project"
 ) -> Dict[str, Any]:
     """Create a project with multiple tasks at once"""
-    from .utils import create_project_with_tasks_util
+    from .projects import create_project_with_tasks as create_project_impl
 
-    return create_project_with_tasks_util(project_title, task_titles, project_type)
+    api_client = create_api_client()
+    return create_project_impl(api_client, project_title, task_titles, project_type)
 
 
 @mcp.tool()
 async def get_project_overview(project_id: str) -> Dict[str, Any]:
     """Get comprehensive overview of a project including tasks and progress"""
-    from .utils import get_project_overview_util
+    from .projects import get_project_overview as get_project_overview_impl
 
-    return get_project_overview_util(project_id)
+    api_client = create_api_client()
+    return get_project_overview_impl(api_client, project_id)
 
 
 @mcp.tool()
 async def get_daily_focus() -> Dict[str, Any]:
     """Get today's focus items - due items and scheduled tasks"""
-    from .utils import get_daily_focus_util
+    from .tasks import get_daily_focus as get_daily_focus_impl
 
-    return get_daily_focus_util()
+    api_client = create_api_client()
+    return get_daily_focus_impl(api_client)
 
 
 @mcp.tool()
 async def get_productivity_summary() -> Dict[str, Any]:
     """Get productivity summary with completed tasks and goals progress"""
-    from .utils import get_productivity_summary_util
+    from .analytics import get_productivity_summary as get_productivity_summary_impl
 
-    return get_productivity_summary_util()
+    api_client = create_api_client()
+    return get_productivity_summary_impl(api_client)
 
 
 @mcp.tool()
 async def batch_create_tasks(
-    task_list: list, project_id: Optional[str] = None, category_id: Optional[str] = None
+    task_list: List[str],
+    project_id: Optional[str] = None,
+    category_id: Optional[str] = None,
 ) -> Dict[str, Any]:
     """Create multiple tasks at once with optional project/category assignment"""
-    from .utils import batch_create_tasks_util
+    from .tasks import batch_create_tasks as batch_create_tasks_impl
 
-    return batch_create_tasks_util(task_list, project_id, category_id)
+    api_client = create_api_client()
+    return batch_create_tasks_impl(api_client, task_list, project_id, category_id)
 
 
 @mcp.tool()
-async def batch_mark_done(task_ids: list) -> Dict[str, Any]:
+async def batch_mark_done(task_ids: List[str]) -> Dict[str, Any]:
     """Mark multiple tasks as done at once"""
-    settings = get_settings()
-    api_client = MarvinAPIClient(api_key=settings.amazing_marvin_api_key)
+    api_client = create_api_client()
 
     completed_tasks = []
     failed_tasks = []
@@ -248,16 +235,16 @@ async def batch_mark_done(task_ids: list) -> Dict[str, Any]:
 @mcp.tool()
 async def quick_daily_planning() -> Dict[str, Any]:
     """Get a quick daily planning overview with actionable insights"""
-    from .utils import quick_daily_planning_util
+    from .tasks import quick_daily_planning as quick_daily_planning_impl
 
-    return quick_daily_planning_util()
+    api_client = create_api_client()
+    return quick_daily_planning_impl(api_client)
 
 
 @mcp.tool()
 async def time_tracking_summary() -> Dict[str, Any]:
     """Get time tracking overview and productivity insights"""
-    settings = get_settings()
-    api_client = MarvinAPIClient(api_key=settings.amazing_marvin_api_key)
+    api_client = create_api_client()
 
     # Get currently tracked item
     tracked_item = api_client.get_currently_tracked_item()
@@ -285,9 +272,10 @@ async def time_tracking_summary() -> Dict[str, Any]:
 @mcp.tool()
 async def get_completed_tasks() -> Dict[str, Any]:
     """Get completed tasks with efficient date filtering and categorization"""
-    from .utils import get_completed_tasks_util
+    from .analytics import get_completed_tasks as get_completed_tasks_impl
 
-    return get_completed_tasks_util()
+    api_client = create_api_client()
+    return get_completed_tasks_impl(api_client)
 
 
 @mcp.tool()
@@ -309,9 +297,14 @@ async def get_productivity_summary_for_time_range(
         - get_productivity_summary_for_time_range(start_date='2025-06-01', end_date='2025-06-10')
         - get_productivity_summary_for_time_range(start_date='2025-06-01')  # June 1st to today
     """
-    from .utils import get_productivity_summary_for_time_range_util
+    from .analytics import (
+        get_productivity_summary_for_time_range as get_productivity_summary_for_time_range_impl,
+    )
 
-    return get_productivity_summary_for_time_range_util(days, start_date, end_date)
+    api_client = create_api_client()
+    return get_productivity_summary_for_time_range_impl(
+        api_client, days, start_date, end_date
+    )
 
 
 @mcp.tool()
@@ -321,15 +314,14 @@ async def get_completed_tasks_for_date(date: str) -> Dict[str, Any]:
     Args:
         date: Date in YYYY-MM-DD format (e.g., '2025-06-13')
     """
-    settings = get_settings()
-    api_client = MarvinAPIClient(api_key=settings.amazing_marvin_api_key)
+    api_client = create_api_client()
 
     try:
         completed_items = api_client.get_done_items(date=date)
 
         # Group by project for better organization
-        by_project = {}
-        unassigned = []
+        by_project: Dict[str, List[Dict[str, Any]]] = {}
+        unassigned: List[Dict[str, Any]] = []
 
         for item in completed_items:
             parent_id = item.get("parentId", "unassigned")

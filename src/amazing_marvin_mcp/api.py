@@ -6,6 +6,14 @@ import requests
 logger = logging.getLogger(__name__)
 
 
+def create_api_client() -> "MarvinAPIClient":
+    """Create API client with settings."""
+    from .config import get_settings
+
+    settings = get_settings()
+    return MarvinAPIClient(api_key=settings.amazing_marvin_api_key)
+
+
 class MarvinAPIClient:
     """API client for Amazing Marvin"""
 

@@ -1,4 +1,4 @@
-# 🚀 Amazing Marvin Model Context Provider
+# 🚀 Amazing Marvin AI Assistant Integration
 
 [![smithery badge](https://smithery.ai/badge/@bgheneti/amazing-marvin-mcp)](https://smithery.ai/server/@bgheneti/amazing-marvin-mcp)
 [![PyPI version](https://badge.fury.io/py/amazing-marvin-mcp.svg)](https://badge.fury.io/py/amazing-marvin-mcp)
@@ -6,7 +6,7 @@
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![Model Context Protocol](https://img.shields.io/badge/MCP-Compatible-brightgreen.svg)](https://modelcontextprotocol.io/)
 
-> 🤖 Supercharge your AI assistant with your Amazing Marvin productivity data
+> Connect your Amazing Marvin productivity system with AI assistants for smarter task management
 
 ## 📋 Table of Contents
 
@@ -23,18 +23,15 @@
 
 ## 🎯 What is this?
 
-The **Amazing Marvin MCP** bridges your [Amazing Marvin](https://amazingmarvin.com/) productivity system with AI assistants like Claude, Cursor, and others. Instead of manually copying your tasks and projects into chat, your AI can directly access and understand your productivity data.
-
-### 💭 Why?
-Because I love using Amazing Marvin and want it to play nice with my other tools 😊
+This connects your [Amazing Marvin](https://amazingmarvin.com/) productivity system with AI assistants like Claude, Cursor, and others. Instead of manually copying your tasks and projects into chat, your AI assistant can see and help with your actual Amazing Marvin data.
 
 ### ✨ Key Benefits
 
-- 🔄 **Real-time sync** - Your AI always sees your current tasks, projects, and categories
-- 🧠 **Smart context** - AI understands your productivity patterns and priorities
-- ⚡ **Instant access** - No more copy-pasting task lists or project details
-- 🎯 **Focused assistance** - Get help with specific projects or overdue items
-- 🛡️ **Secure** - Your data stays between Amazing Marvin and your AI client
+- 🔄 **Stay in sync** - Your AI assistant always sees your current tasks, projects, and goals
+- 📋 **Smart help** - Get personalized advice based on your actual workload and priorities
+- ⚡ **Save time** - No more copy-pasting task lists or explaining your projects
+- 🎯 **Better focus** - AI helps you identify what's most important right now
+- 🔒 **Private** - Your data stays between Amazing Marvin and your AI assistant
 
 ## ⚡ Quick Start (2 minutes)
 
@@ -56,38 +53,38 @@ Ask your AI: *"What tasks do I have today?"*
 
 ---
 
-## 🛠️ What can you do with this?
+## 💡 What can you do with this?
 
-This integration connects your Amazing Marvin data with AI assistants, helping you manage your productivity system more effectively. Here's what you can accomplish:
+Once connected, your AI assistant becomes your personal productivity coach with access to your real Amazing Marvin data:
 
-### 📋 Task Management
-> *"What tasks are on my schedule today?"*
-> *"What's due this week?"*
-> *"Show me my high-priority tasks"*
+### 📅 Daily Planning Help
+*"What should I focus on today?"* - Get personalized recommendations based on your actual deadlines and priorities
 
-### 🗂️ Project Organization
-> *"Show me all tasks in my birthday scavenger hunt project"*
-> *"What's the progress on my current projects?"*
-> *"Help me organize these tasks into projects"*
+*"I'm feeling overwhelmed - what's most important?"* - AI helps you cut through the noise and identify what really matters
 
-### 🧠 Planning & Focus
-> *"What should I focus on today based on my priorities?"*
-> *"Plan my day based on my current deadlines and goals"*
-> *"I'm feeling overwhelmed - help me identify my most important tasks"*
+### 🎯 Project Insights
+*"How is my website redesign project going?"* - See progress, completed tasks, and what's left to do
 
-### ✅ Productivity Tracking
-> *"How many tasks have I completed today?"*
-> *"Show me my productivity for last week"*
-> *"What did I accomplish on Tuesday?"*
+*"Show me everything related to client work this week"* - Get organized views of your tasks by project or category
 
-### ⏱️ Time Management
-> *"Start tracking time on my current task"*
-> *"What am I currently tracking time on?"*
-> *"Stop tracking time on this task"*
+### 📊 Progress Tracking
+*"What did I accomplish this week?"* - Review your productivity patterns and celebrate wins
 
-The integration provides actual data from your Amazing Marvin account, allowing your AI assistant to give personalized productivity advice rather than generic suggestions.
+*"Which days am I most productive?"* - Understand your patterns to plan better
 
-**Limitations:** While this covers most core features, some advanced Amazing Marvin capabilities like strategies, customizations, and reward systems have limited API support.
+### ⏰ Smart Scheduling
+*"What's overdue and needs attention?"* - Never lose track of important deadlines
+
+*"Help me plan tomorrow based on what I have scheduled"* - Get realistic daily plans that work
+
+### ⏱️ Time Tracking
+*"Start tracking time on this task"* - Seamlessly manage time tracking from your AI chat
+
+*"What have I been working on today?"* - Review your time allocation and focus
+
+**Why this is better than generic productivity advice:** Your AI sees your actual tasks, deadlines, and progress - so the help you get is personalized to your real situation, not generic tips.
+
+**Note:** This covers most Amazing Marvin features, though some advanced customizations and strategies have limited API access.
 
 ## 📦 Installation
 
@@ -182,6 +179,26 @@ Add to your Windsurf MCP configuration:
 ```
 </details>
 
+<details>
+<summary>🆚 VS Code</summary>
+
+Add to your VS Code MCP configuration:
+
+```json
+{
+  "mcpServers": {
+    "amazing-marvin": {
+      "command": "python",
+      "args": ["-m", "amazing_marvin_mcp"],
+      "env": {
+        "AMAZING_MARVIN_API_KEY": "your-api-key-here"
+      }
+    }
+  }
+}
+```
+</details>
+
 ## 💡 Usage Examples
 
 The MCP provides specific tools that your AI can use. Simply ask your AI to help with productivity tasks and it will use the appropriate tools:
@@ -195,15 +212,16 @@ The MCP provides specific tools that your AI can use. Simply ask your AI to help
 | *"Mark task Y as done"* | `mark_task_done()` |
 | *"Start tracking time on this"* | `start_time_tracking()` |
 
-### 🎯 Understanding Your Default Setup
+### 📁 How it understands your setup
 
-Amazing Marvin creates these default containers for most users:
+Your AI assistant automatically understands your Amazing Marvin structure:
 
-- **📁 Work** - Professional/job tasks
-- **🏠 Personal** - Personal life tasks
-- **📥 Inbox** - Uncategorized items waiting to be sorted
+- **Work & Personal projects** - Keeps your professional and personal tasks organized
+- **Categories and labels** - Knows how you've organized your productivity system
+- **Due dates and priorities** - Understands what's urgent vs. important
+- **Completed vs. pending** - Tracks your progress and momentum
 
-Your AI understands this structure and can help organize tasks accordingly.
+No need to explain your system - your AI just gets it!
 
 ## 🔧 Troubleshooting
 
@@ -256,50 +274,49 @@ Your AI understands this structure and can help organize tasks accordingly.
 3. Use full path: `which python` and use that in your config
 </details>
 
-## ❓ FAQ
+## ❓ Common Questions
 
 <details>
-<summary><strong>Is my data secure?</strong></summary>
+<summary><strong>Is my data safe?</strong></summary>
 
-Yes! Your data flows directly between Amazing Marvin and your AI client. The MCP server runs locally on your machine and doesn't store or transmit your data elsewhere.
+Absolutely! Your Amazing Marvin data stays between you, Amazing Marvin, and your AI assistant. The connection runs on your computer - nothing is stored on external servers or shared with anyone else.
 </details>
 
 <details>
-<summary><strong>Does this work with all AI assistants?</strong></summary>
+<summary><strong>Which AI assistants work with this?</strong></summary>
 
-It works with any AI client that supports the Model Context Protocol (MCP), including Claude Desktop, Cursor, Windsurf, and others.
+Any AI assistant that supports the Model Context Protocol, including Claude Desktop, Cursor, VS Code, and Windsurf. More are being added regularly.
 </details>
 
 <details>
-<summary><strong>What Amazing Marvin data can the AI access?</strong></summary>
+<summary><strong>What can my AI assistant see?</strong></summary>
 
-The AI can access:
-- ✅ Tasks and subtasks
-- ✅ Projects and categories
-- ✅ Due dates and priorities
-- ✅ Task status (completed/pending)
-- ✅ Time tracking data and current tracking status
-- ✅ Goals, labels, and account information
-- ✅ Completed tasks and productivity analytics
+Your AI can see:
+- ✅ Your tasks, projects, and categories
+- ✅ Due dates, priorities, and completion status
+- ✅ Time tracking and goals
+- ✅ Labels and organizational structure
+- ✅ Productivity history and patterns
+
+Basically everything you see in Amazing Marvin, your AI can see too.
 </details>
 
 <details>
-<summary><strong>Will this slow down my AI assistant?</strong></summary>
+<summary><strong>Will this make my AI assistant slower?</strong></summary>
 
-The MCP makes fresh API calls to Amazing Marvin for each request. Response times depend on Amazing Marvin's API performance and your internet connection. Data is fetched in real-time when you ask productivity-related questions.
+Not noticeably. The system fetches your data from Amazing Marvin when you ask productivity questions. Response time depends on your internet connection, but it's usually very quick.
 </details>
 
 <details>
-<summary><strong>Can the AI modify my Amazing Marvin data?</strong></summary>
+<summary><strong>Can my AI assistant change my tasks?</strong></summary>
 
-Yes, the AI can both read and write to your Amazing Marvin account. It can:
+Yes, if you ask it to! Your AI can:
 - ✅ Create new tasks and projects
-- ✅ Mark tasks as complete
+- ✅ Mark tasks as done
 - ✅ Start and stop time tracking
-- ✅ Create batch operations
-- ✅ Claim reward points
+- ✅ Organize tasks in batches
 
-Be mindful when asking the AI to make changes to your data.
+Don't worry - it only makes changes when you specifically ask it to.
 </details>
 
 <details>
@@ -435,6 +452,46 @@ The MCP provides 27 comprehensive tools to AI assistants:
 - `create_project_with_tasks()` - Project setup
 - `get_time_tracks()` - Time tracking history
 
+## 🤝 Contributing
+
+### 🚀 Publishing New Versions
+
+This project uses automated publishing to PyPI via GitHub Actions.
+
+**For maintainers:**
+```bash
+# Make your changes and test them
+pytest tests/ -v
+ruff check src/
+mypy src/amazing_marvin_mcp/
+
+# Use the release script to bump version and create tag
+python scripts/release.py patch   # for bug fixes
+python scripts/release.py minor   # for new features
+python scripts/release.py major   # for breaking changes
+
+# Push to trigger CI and PyPI publish
+git push origin main
+git push origin v1.x.x
+```
+
+**The workflow:**
+1. ✅ Tests run on Python 3.8-3.12
+2. ✅ Linting and type checking pass
+3. 📦 Package is built and checked
+4. 🚀 Published to PyPI automatically on version tags
+
+### 🔧 Local Development Setup
+```bash
+git clone https://github.com/bgheneti/Amazing-Marvin-MCP.git
+cd Amazing-Marvin-MCP
+pip install -e ".[dev]"
+pre-commit install
+```
+
+### 🧪 Testing
+You can also manually publish to Test PyPI by running the workflow manually on GitHub.
+
 ## 🔒 Privacy & Security
 
 ### 🛡️ Your Data Protection
@@ -448,26 +505,19 @@ The MCP provides 27 comprehensive tools to AI assistants:
 - ✅ Don't share your API key in screenshots or logs
 - ✅ Keep your API key secure and treat it like a password
 
-### ⚖️ API Limitations & Rate Limiting
+### ⚖️ Performance & Limitations
 
-**Rate Limiting:**
-- Amazing Marvin API has rate limits on requests per minute
-- The MCP makes API calls as needed for each request
-- Historical data is cached for 10 minutes to reduce API load
-- Rate limit errors (429) may occur with frequent requests
+**What to expect:**
+- Your AI assistant fetches fresh data from Amazing Marvin when you ask questions
+- Historical data is cached briefly to avoid repeated requests
+- Response time depends on your internet connection to Amazing Marvin
+- Very frequent requests might occasionally hit rate limits (just wait a moment)
 
-**API Endpoint Characteristics:**
-- `/doneItems`: Provides completed tasks, can be filtered by date
-- `/todayItems`: Returns scheduled tasks for the current day
-- `/children`: Returns tasks belonging to a specific parent/project
-- `/categories`: Returns projects and categories
-- Data must be fetched through specific endpoints - no bulk data export
-
-**Performance Optimization:**
-- Historical data is cached for 10 minutes (except today's data)
-- Multiple API calls may be required for comprehensive queries
-- Batch operations are available for task creation and completion
-- Cache is cleared after 1 hour of inactivity
+**Technical details:**
+- Data is fetched in real-time for accuracy
+- Some data is cached for 10 minutes to improve speed
+- Batch operations work efficiently for multiple tasks
+- All the core Amazing Marvin features are supported
 
 ## 📄 License
 
@@ -477,8 +527,8 @@ MIT License - see [LICENSE](https://opensource.org/licenses/MIT) for details.
 
 <div align="center">
 
-**Developed for Amazing Marvin users**
+**Made with ❤️ for Amazing Marvin users**
 
-[Report Issues](https://github.com/bgheneti/Amazing-Marvin-MCP/issues) • [Request Features](https://github.com/bgheneti/Amazing-Marvin-MCP/issues/new) • [Star on GitHub](https://github.com/bgheneti/Amazing-Marvin-MCP)
+[Report Issues](https://github.com/bgheneti/Amazing-Marvin-MCP/issues) • [Suggest Improvements](https://github.com/bgheneti/Amazing-Marvin-MCP/issues/new) • [Star on GitHub](https://github.com/bgheneti/Amazing-Marvin-MCP)
 
 </div>

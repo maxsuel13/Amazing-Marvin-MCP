@@ -56,7 +56,10 @@ target-version = "py38"
 
 [tool.ruff.lint]
 select = ["E", "F", "W", "C90", "I", "N", "UP", "B", "A", "C4", "DJ", "EM", "EXE", "ISC", "ICN", "G", "PIE", "T20", "PYI", "PT", "Q", "RSE", "RET", "SLF", "SIM", "TID", "TCH", "ARG", "PTH", "ERA", "PD", "PGH", "PL", "TRY", "NPY", "RUF"]
-ignore = ["E501", "PLR0913", "PLR0912", "PLR0915", "TRY003", "EM101", "EM102"]
+ignore = ["E501", "PLR0913", "PLR0912", "PLR0915", "TRY003", "EM101", "EM102", "PLR2004"]
+
+[tool.ruff.lint.per-file-ignores]
+"scripts/*.py" = ["T201", "EXE001"]  # Allow print statements and missing executable permissions in scripts
 
 [tool.ruff.format]
 quote-style = "double"
