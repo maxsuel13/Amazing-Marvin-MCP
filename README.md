@@ -117,24 +117,10 @@ cd Amazing-Marvin-MCP
 pip install -e .
 ```
 
-## ⚙️ Configuration
-
-### 🔑 Set your API key
-
-**Option A: Environment variable**
-```bash
-export AMAZING_MARVIN_API_KEY="your-api-key-here"
-```
-
-**Option B: Create a `.env` file**
-```env
-AMAZING_MARVIN_API_KEY=your-api-key-here
-```
-
-### 📱 Client Configuration
+#### 📱 Client Configuration
 
 <details>
-<summary><strong>🖥️ Claude Desktop</strong></summary>
+<summary>🖥️ Claude Desktop</summary>
 
 Add to your `claude_desktop_config.json`:
 
@@ -158,7 +144,7 @@ Add to your `claude_desktop_config.json`:
 </details>
 
 <details>
-<summary><strong>🎯 Cursor</strong></summary>
+<summary>🎯 Cursor</summary>
 
 Add to your MCP settings:
 
@@ -178,7 +164,7 @@ Add to your MCP settings:
 </details>
 
 <details>
-<summary><strong>💨 Windsurf</strong></summary>
+<summary>💨 Windsurf</summary>
 
 Add to your Windsurf MCP configuration:
 
@@ -380,6 +366,18 @@ git clone https://github.com/bgheneti/Amazing-Marvin-MCP.git
 cd Amazing-Marvin-MCP
 pip install -e ".[dev]"
 pre-commit install
+```
+
+### 🔑 Set your API key
+
+**Option A: Environment variable**
+```bash
+export AMAZING_MARVIN_API_KEY="your-api-key-here"
+```
+
+**Option B: Create a `.env` file**
+```env
+AMAZING_MARVIN_API_KEY=your-api-key-here
 ```
 
 ### 🧪 Testing
