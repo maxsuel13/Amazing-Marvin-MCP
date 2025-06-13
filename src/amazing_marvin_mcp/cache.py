@@ -2,7 +2,6 @@
 
 import logging
 from datetime import datetime, timedelta
-from typing import Dict, List
 
 from .api import MarvinAPIClient
 
@@ -18,10 +17,10 @@ class DoneItemsCache:
     """Thread-safe cache for completed items with automatic cleanup."""
 
     def __init__(self):
-        self._cache: Dict[str, List[Dict]] = {}
-        self._expiry: Dict[str, datetime] = {}
+        self._cache: dict[str, list[dict]] = {}
+        self._expiry: dict[str, datetime] = {}
 
-    def get(self, date: str, api_client: MarvinAPIClient) -> List[Dict]:
+    def get(self, date: str, api_client: MarvinAPIClient) -> list[dict]:
         """Get completed items with caching support."""
         current_time = datetime.now()
         today = current_time.strftime(DATE_FORMAT)
@@ -72,7 +71,7 @@ class DoneItemsCache:
         if expired_dates:
             logger.debug("Cleaned up %d expired cache entries", len(expired_dates))
 
-    def get_stats(self) -> Dict[str, int]:
+    def get_stats(self) -> dict[str, int]:
         """Get cache statistics."""
         return {
             "cached_dates": len(self._cache),

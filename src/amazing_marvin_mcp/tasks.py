@@ -2,14 +2,14 @@
 
 import logging
 from datetime import datetime
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 from .api import MarvinAPIClient
 
 logger = logging.getLogger(__name__)
 
 
-def get_daily_focus(api_client: MarvinAPIClient) -> Dict[str, Any]:
+def get_daily_focus(api_client: MarvinAPIClient) -> dict[str, Any]:
     """Get today's focus items - due items, scheduled tasks, and completed tasks."""
     # Get today's items and due items
     today_items = api_client.get_tasks()  # This gets todayItems
@@ -52,10 +52,10 @@ def get_daily_focus(api_client: MarvinAPIClient) -> Dict[str, Any]:
 
 def batch_create_tasks(
     api_client: MarvinAPIClient,
-    task_list: List[Any],
-    project_id: Optional[str] = None,
-    category_id: Optional[str] = None,
-) -> Dict[str, Any]:
+    task_list: list[Any],
+    project_id: str | None = None,
+    category_id: str | None = None,
+) -> dict[str, Any]:
     """Create multiple tasks at once with optional project/category assignment."""
     created_tasks = []
     failed_tasks = []
@@ -88,7 +88,7 @@ def batch_create_tasks(
     }
 
 
-def quick_daily_planning(api_client: MarvinAPIClient) -> Dict[str, Any]:
+def quick_daily_planning(api_client: MarvinAPIClient) -> dict[str, Any]:
     """Get a quick daily planning overview with actionable insights."""
     # Get today's focus items
     today_items = api_client.get_tasks()

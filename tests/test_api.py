@@ -4,6 +4,7 @@ from datetime import datetime
 
 import pytest
 import requests
+
 from amazing_marvin_mcp.api import MarvinAPIClient
 from amazing_marvin_mcp.config import get_settings
 
@@ -11,7 +12,7 @@ from amazing_marvin_mcp.config import get_settings
 TASK_COUNT = 3  # Number of tasks to create in tests
 
 
-@pytest.fixture()
+@pytest.fixture
 def api_client():
     """Create API client for testing."""
     try:
@@ -23,7 +24,7 @@ def api_client():
         pytest.skip("Configuration error - cannot create API client")
 
 
-@pytest.fixture()
+@pytest.fixture
 def test_project_data():
     """Test project data."""
     return {
@@ -32,7 +33,7 @@ def test_project_data():
     }
 
 
-@pytest.fixture()
+@pytest.fixture
 def test_task_data():
     """Test task data."""
     return {

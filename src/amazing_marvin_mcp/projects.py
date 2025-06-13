@@ -1,7 +1,7 @@
 """Project management functions for Amazing Marvin MCP."""
 
 import logging
-from typing import Any, Dict, List
+from typing import Any
 
 from .api import MarvinAPIClient
 
@@ -11,9 +11,9 @@ logger = logging.getLogger(__name__)
 def create_project_with_tasks(
     api_client: MarvinAPIClient,
     project_title: str,
-    task_titles: List[str],
+    task_titles: list[str],
     project_type: str = "project",
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     """Create a project with multiple tasks at once."""
     # Create the project
     project_data = {"title": project_title, "type": project_type}
@@ -37,7 +37,7 @@ def create_project_with_tasks(
 
 def get_project_overview(
     api_client: MarvinAPIClient, project_id: str
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     """Get comprehensive overview of a project including tasks and progress."""
     # Get project children
     children = api_client.get_children(project_id)

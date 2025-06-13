@@ -2,7 +2,7 @@
 
 import logging
 from datetime import datetime
-from typing import Any, Dict, List, Optional, Tuple, cast
+from typing import Any, cast
 
 from .api import MarvinAPIClient
 from .cache import done_items_cache
@@ -11,7 +11,7 @@ from .date_utils import DateUtils
 logger = logging.getLogger(__name__)
 
 
-def get_productivity_summary(api_client: MarvinAPIClient) -> Dict[str, Any]:
+def get_productivity_summary(api_client: MarvinAPIClient) -> dict[str, Any]:
     """Get productivity summary with goals progress and tracking status."""
     today = DateUtils.get_today()
 
@@ -36,10 +36,10 @@ def get_productivity_summary(api_client: MarvinAPIClient) -> Dict[str, Any]:
 
 def get_productivity_summary_for_time_range(
     api_client: MarvinAPIClient,
-    days: Optional[int] = None,
-    start_date: Optional[str] = None,
-    end_date: Optional[str] = None,
-) -> Dict[str, Any]:
+    days: int | None = None,
+    start_date: str | None = None,
+    end_date: str | None = None,
+) -> dict[str, Any]:
     """Get a productivity summary for a specified time range using efficient API calls.
 
     Args:
@@ -83,7 +83,7 @@ def get_productivity_summary_for_time_range(
         _calculate_statistics(range_summary)
 
         # Sort projects by completion count
-        by_project = cast("Dict[str, int]", range_summary["by_project"])
+        by_project = cast("dict[str, int]", range_summary["by_project"])
         range_summary["top_projects"] = sorted(
             by_project.items(), key=lambda x: x[1], reverse=True
         )[:5]  # Top 5 projects
@@ -97,7 +97,7 @@ def get_productivity_summary_for_time_range(
             }
 
             range_summary["project_names"] = project_names
-            top_projects = cast("List[Tuple[str, int]]", range_summary["top_projects"])
+            top_projects = cast("list[tuple[str, int]]", range_summary["top_projects"])
             range_summary["top_projects_with_names"] = [
                 {
                     "project_id": proj_id,
@@ -134,7 +134,7 @@ def get_productivity_summary_for_time_range(
         return range_summary
 
 
-def get_completed_tasks(api_client: MarvinAPIClient) -> Dict[str, Any]:
+def get_completed_tasks(api_client: MarvinAPIClient) -> dict[str, Any]:
     """Get completed tasks using the efficient /doneItems endpoint with date filtering.
 
     Returns completed tasks with efficient date-based categorization.
@@ -194,7 +194,7 @@ def get_completed_tasks(api_client: MarvinAPIClient) -> Dict[str, Any]:
 
 
 def _process_date_data(
-    date_str: str, api_client: MarvinAPIClient, range_summary: Dict[str, Any]
+    date_str: str, api_client: MarvinAPIClient, range_summary: dict[str, Any]
 ) -> None:
     """Process data for a single date and update the range_summary dict."""
     date_obj = datetime.strptime(date_str, "%Y-%m-%d")
@@ -250,7 +250,7 @@ def _process_date_data(
         range_summary["tasks_by_date"][date_str] = []
 
 
-def _calculate_statistics(range_summary: Dict[str, Any]) -> None:
+def _calculate_statistics(range_summary: dict[str, Any]) -> None:
     """Calculate statistics from collected data and update range_summary."""
     if range_summary["daily_breakdown"]:
         daily_counts = [

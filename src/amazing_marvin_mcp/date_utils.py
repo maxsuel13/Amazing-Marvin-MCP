@@ -1,7 +1,6 @@
 """Date utilities for Amazing Marvin MCP."""
 
 from datetime import datetime, timedelta
-from typing import List, Optional, Tuple
 
 
 class DateUtils:
@@ -32,10 +31,10 @@ class DateUtils:
 
     @staticmethod
     def generate_date_range(
-        days: Optional[int] = None,
-        start_date: Optional[str] = None,
-        end_date: Optional[str] = None,
-    ) -> Tuple[List[str], datetime, datetime]:
+        days: int | None = None,
+        start_date: str | None = None,
+        end_date: str | None = None,
+    ) -> tuple[list[str], datetime, datetime]:
         """Generate a list of dates and start/end datetime objects based on inputs.
 
         Args:

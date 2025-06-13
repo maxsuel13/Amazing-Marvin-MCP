@@ -1,5 +1,5 @@
 import logging
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 import requests
 
@@ -29,7 +29,7 @@ class MarvinAPIClient:
         self.headers = {"X-API-Token": api_key}
 
     def _make_request(
-        self, method: str, endpoint: str, data: Optional[Dict] = None
+        self, method: str, endpoint: str, data: dict | None = None
     ) -> Any:
         """Make a request to the API"""
         url = f"{self.base_url}{endpoint}"
@@ -62,7 +62,7 @@ class MarvinAPIClient:
             logger.exception("Request error")
             raise
 
-    def get_tasks(self, date: Optional[str] = None) -> List[Dict]:
+    def get_tasks(self, date: str | None = None) -> list[dict]:
         """Get all tasks and projects (use /todayItems or /dueItems for scheduled/due, or /children for subtasks)"""
         # The Marvin API does not provide a /tasks endpoint. Use /todayItems for scheduled items, /dueItems for due, or /children for subtasks.
         endpoint = "/todayItems"
@@ -70,14 +70,14 @@ class MarvinAPIClient:
             endpoint += f"?date={date}"
         return self._make_request("get", endpoint)
 
-    def get_task(self, task_id: str) -> Dict:
+    def get_task(self, task_id: str) -> dict:
         """Get a specific task or project by ID (requires full access token, not supported by default API token)"""
         # The Marvin API does not provide a direct /tasks/{id} endpoint. Use /api/doc?id=... with full access token for arbitrary docs.
         raise NotImplementedError(
             "Direct task lookup by ID is not supported with the standard API token. Use /api/doc?id=... with full access token."
         )
 
-    def get_projects(self) -> List[Dict]:
+    def get_projects(self) -> list[dict]:
         """
         Get all projects (as categories with type 'project').
 
@@ -86,19 +86,19 @@ class MarvinAPIClient:
         categories = self.get_categories()
         return [cat for cat in categories if cat.get("type") == "project"]
 
-    def get_categories(self) -> List[Dict]:
+    def get_categories(self) -> list[dict]:
         """Get all categories"""
         return self._make_request("get", "/categories")
 
-    def get_labels(self) -> List[Dict]:
+    def get_labels(self) -> list[dict]:
         """Get all labels"""
         return self._make_request("get", "/labels")
 
-    def get_due_items(self) -> List[Dict]:
+    def get_due_items(self) -> list[dict]:
         """Get all due items (experimental endpoint)"""
         return self._make_request("get", "/dueItems")
 
-    def get_done_items(self, date: Optional[str] = None) -> List[Dict]:
+    def get_done_items(self, date: str | None = None) -> list[dict]:
         """Get completed/done items, optionally filtered by completion date
 
         Args:
@@ -113,7 +113,7 @@ class MarvinAPIClient:
             endpoint += f"?date={date}"
         return self._make_request("get", endpoint)
 
-    def get_all_tasks_for_date(self, date: str) -> List[Dict]:
+    def get_all_tasks_for_date(self, date: str) -> list[dict]:
         """Get all tasks for a specific date, including completed ones.
 
         Args:
@@ -138,7 +138,7 @@ class MarvinAPIClient:
         else:
             return result
 
-    def get_children(self, parent_id: str) -> List[Dict]:
+    def get_children(self, parent_id: str) -> list[dict]:
         """Get child tasks of a specific parent task or project (experimental endpoint)"""
         try:
             return self._make_request("get", f"/children?parentId={parent_id}")
@@ -151,11 +151,11 @@ class MarvinAPIClient:
                 return []
             raise
 
-    def create_task(self, task_data: Dict) -> Dict:
+    def create_task(self, task_data: dict) -> dict:
         """Create a new task (uses /addTask endpoint)"""
         return self._make_request("post", "/addTask", data=task_data)
 
-    def mark_task_done(self, item_id: str, timezone_offset: int = 0) -> Dict:
+    def mark_task_done(self, item_id: str, timezone_offset: int = 0) -> dict:
         """Mark a task as done (experimental endpoint)"""
         return self._make_request(
             "post",
@@ -174,23 +174,23 @@ class MarvinAPIClient:
             logger.exception("API connection test failed")
             raise
 
-    def start_time_tracking(self, task_id: str) -> Dict:
+    def start_time_tracking(self, task_id: str) -> dict:
         """Start time tracking for a task (experimental endpoint)"""
         return self._make_request(
             "post", "/track", data={"taskId": task_id, "action": "START"}
         )
 
-    def stop_time_tracking(self, task_id: str) -> Dict:
+    def stop_time_tracking(self, task_id: str) -> dict:
         """Stop time tracking for a task (experimental endpoint)"""
         return self._make_request(
             "post", "/track", data={"taskId": task_id, "action": "STOP"}
         )
 
-    def get_time_tracks(self, task_ids: List[str]) -> Dict:
+    def get_time_tracks(self, task_ids: list[str]) -> dict:
         """Get time tracking data for specific tasks (experimental endpoint)"""
         return self._make_request("post", "/tracks", data={"taskIds": task_ids})
 
-    def claim_reward_points(self, points: int, item_id: str, date: str) -> Dict:
+    def claim_reward_points(self, points: int, item_id: str, date: str) -> dict:
         """Claim reward points for completing a task"""
         return self._make_request(
             "post",
@@ -198,36 +198,36 @@ class MarvinAPIClient:
             data={"points": points, "itemId": item_id, "date": date},
         )
 
-    def get_kudos_info(self) -> Dict:
+    def get_kudos_info(self) -> dict:
         """Get kudos information"""
         return self._make_request("get", "/kudos")
 
-    def get_goals(self) -> List[Dict]:
+    def get_goals(self) -> list[dict]:
         """Get all goals"""
         return self._make_request("get", "/goals")
 
-    def get_account_info(self) -> Dict:
+    def get_account_info(self) -> dict:
         """Get account information"""
         return self._make_request("get", "/me")
 
-    def get_currently_tracked_item(self) -> Dict:
+    def get_currently_tracked_item(self) -> dict:
         """Get currently tracked item"""
         result = self._make_request("get", "/trackedItem")
         if not result:
             return {"message": "No item currently being tracked"}
         return result
 
-    def create_project(self, project_data: Dict) -> Dict:
+    def create_project(self, project_data: dict) -> dict:
         """Create a new project (experimental endpoint)"""
         return self._make_request("post", "/addProject", data=project_data)
 
-    def update_task(self, task_id: str, task_data: Dict) -> Dict:
+    def update_task(self, task_id: str, task_data: dict) -> dict:
         """Update a task (requires full access token and /api/doc/update)"""
         raise NotImplementedError(
             "Task update is not supported with the standard API token. Use /api/doc/update with full access token."
         )
 
-    def delete_task(self, task_id: str) -> Dict:
+    def delete_task(self, task_id: str) -> dict:
         """Delete a task (requires full access token and /api/doc/delete)"""
         raise NotImplementedError(
             "Task deletion is not supported with the standard API token. Use /api/doc/delete with full access token."
