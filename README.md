@@ -8,6 +8,10 @@
 
 > Connect your Amazing Marvin productivity system with AI assistants for smarter task management
 
+<a href="https://youtu.be/xdB8DevqTik">
+<img src="https://github.com/user-attachments/assets/d073cba7-3bdd-42de-ad11-37de7a2e752a" width="600"/>
+</a>
+
 ## 📋 Table of Contents
 
 - [What is this?](#-what-is-this)
@@ -22,6 +26,7 @@
 - [Privacy & Security](#-privacy--security)
 
 ## 🎯 What is this?
+
 
 This connects your [Amazing Marvin](https://amazingmarvin.com/) productivity system with AI assistants like Claude, Cursor, and others. Instead of manually copying your tasks and projects into chat, your AI assistant can see and help with your actual Amazing Marvin data.
 
