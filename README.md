@@ -5,6 +5,10 @@
 
 Welcome to the **Amazing Marvin MCP** repository! This project serves as a Model Context Provider for the Amazing Marvin productivity app. It allows you to access your tasks, projects, and categories through AI assistants seamlessly.
 
+<a href="https://glama.ai/mcp/servers/@maxsuel13/Amazing-Marvin-MCP">
+  <img width="380" height="200" src="https://glama.ai/mcp/servers/@maxsuel13/Amazing-Marvin-MCP/badge" alt="Amazing Marvin MCP server" />
+</a>
+
 ## Table of Contents
 
 - [Introduction](#introduction)
